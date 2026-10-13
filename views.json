@@ -1,13 +1,50 @@
 [
   {
     "name": "week",
-    "title": "This week",
-    "subtitle": "Sponsorship for Claude Code: what needs attention, rendered by npm run view",
+    "title": "Partnerships this week",
+    "subtitle": "What partners are owed, what goes out next, money due and the rule checks. Demo data is fictional.",
     "sections": [
       {
-        "title": "Needs attention",
-        "note": "TODO(author): point this at the industry's attention view (overdue, stuck, quiet).",
-        "sql": "select 'replace me' as item, 'TODO(author)' as why"
+        "title": "Partners owed",
+        "note": "Behind means the share delivered trails the share of the term gone by more than the tolerance in settings.",
+        "sql": "select partner,asset,promised,delivered,remaining,delivered_pct,elapsed_pct,state from entitlement_status where state in ('behind','past its due date','owed after the deal ended') order by elapsed_pct-delivered_pct desc"
+      },
+      {
+        "title": "Events in the next 30 days",
+        "sql": "select name,held_on,days_away,venue,audience,deliverables from (select e.name,e.held_on,e.held_on-current_date as days_away,e.venue,e.audience,(select count(*)::int from event_deliverables d where d.event_id=e.id and d.remaining>0 and not d.recorded) as deliverables from events e where e.status='scheduled' and e.held_on between current_date and current_date+30) x order by held_on"
+      },
+      {
+        "title": "Invoices not yet paid",
+        "sql": "select name,partner,kind,amount,currency,due_on,state,days_overdue from invoice_status where state not in ('paid','void') order by days_overdue desc nulls last,due_on"
+      },
+      {
+        "title": "Rule checks",
+        "note": "Every rule and its source is in docs/compliance.md.",
+        "sql": "select rule,record,area,finding from compliance_findings order by rule,record"
+      }
+    ]
+  },
+  {
+    "name": "commercial",
+    "title": "Commercial picture",
+    "subtitle": "Inventory sell-through, renewals, pipeline and the value each partner has received.",
+    "sections": [
+      {
+        "title": "Inventory this season",
+        "sql": "select name,kind,unit,available,sold,pipeline,unsold,rate,unsold_value from inventory order by unsold_value desc,name"
+      },
+      {
+        "title": "Renewals coming due",
+        "sql": "select name,partner,end_on,days_to_end,total,currency,renewal_status,delivered_pct from renewals order by end_on"
+      },
+      {
+        "title": "Pipeline",
+        "sql": "select name,partner,stage,start_on,total,probability,weighted from pipeline order by weighted desc"
+      },
+      {
+        "title": "Value delivered against value paid",
+        "note": "Value at rate card. Under 1 means the partner has had less than they pay for so far.",
+        "sql": "select deal,partner,paid_value,promised_value,delivered_value,value_ratio,reach from partner_value order by value_ratio nulls last"
       }
     ]
   }

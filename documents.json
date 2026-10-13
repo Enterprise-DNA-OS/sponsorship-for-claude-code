@@ -1,11 +1,70 @@
 [
   {
-    "name": "example",
-    "title": "TODO(author): the first document this industry must produce",
-    "for_each": "select gen_random_uuid() as id, 'Example' as name",
+    "name": "proof-of-performance",
+    "title": "Proof of performance",
+    "for_each": "select id,partner||' - '||name as name from deal_summary where stage in ('contracted','ended') and delivered>0",
     "file": "name",
     "sections": [
-      { "title": "Details", "sql": "select 'replace me' as item, $1::text as record_id" }
+      {
+        "title": "Agreement",
+        "sql": "select partner,name as agreement,start_on,end_on,currency,total as partnership_value from deal_summary where id=$1"
+      },
+      {
+        "title": "What we promised and what went out",
+        "sql": "select asset,promised,delivered,remaining,state from entitlement_status where deal_id=$1 order by asset"
+      },
+      {
+        "title": "Delivery log",
+        "note": "Each line shows where its evidence is kept. A line with no evidence is checked before this report is sent.",
+        "sql": "select x.delivered_on,a.name as asset,ev.name as event,x.quantity,x.reach,coalesce(x.evidence,'(no evidence recorded)') as evidence from deliveries x join entitlements e on e.id=x.entitlement_id join assets a on a.id=e.asset_id left join events ev on ev.id=x.event_id where e.deal_id=$1 order by x.delivered_on,a.name"
+      }
+    ]
+  },
+  {
+    "name": "partner-statement",
+    "title": "Partner statement",
+    "for_each": "select id,partner||' - '||name as name from deal_summary where stage='contracted' and invoiced>0",
+    "file": "name",
+    "sections": [
+      {
+        "title": "Agreement",
+        "sql": "select partner,name as agreement,currency,cash,contra,total,invoiced,paid from deal_summary where id=$1"
+      },
+      {
+        "title": "Invoices",
+        "note": "Contra is invoiced at market value, the same as a cash sale.",
+        "sql": "select i.name,i.kind,i.amount,i.due_on,i.paid_on,i.state from invoice_status i join deals d on d.name=i.deal where d.id=$1 order by i.due_on"
+      }
+    ]
+  },
+  {
+    "name": "match-day-run-sheet",
+    "title": "Match day partner run sheet",
+    "for_each": "select id,name||' '||held_on as name from events where status='scheduled' and held_on between current_date and current_date+30",
+    "file": "name",
+    "sections": [
+      {
+        "title": "Event",
+        "sql": "select name,held_on,venue,audience,broadcast from events where id=$1"
+      },
+      {
+        "title": "What goes out, by partner",
+        "note": "Tick each line on the day. Record it afterwards with /deliver-event.",
+        "sql": "select partner,asset,kind,remaining as left_on_the_deal from event_deliverables where event_id=$1 and remaining>0 and not recorded order by partner,asset"
+      }
+    ]
+  },
+  {
+    "name": "sponsorship-prospectus",
+    "title": "Partnership opportunities",
+    "for_each": "select to_char(current_date,'YYYY-MM') as id,'Partnership opportunities '||to_char(current_date,'YYYY-MM') as name",
+    "file": "name",
+    "sections": [
+      {
+        "title": "Available this season",
+        "note": "Rate card values are list prices. Packages are built around what you want to achieve.",
+        "sql": "select name,kind,unit,audience,unsold as available,rate from inventory where unsold>0 and $1::text is not null order by rate desc nulls last"
+      }
     ]
   }
 ]

@@ -1,0 +1,6 @@
+{
+  "_": "Point each field at your export's heading when it differs. Only list the fields you need; the rest use the default headings.",
+  "kore-assets": { "name": "Inventory Item Name", "rate": "List Price" },
+  "kore-deals": { "name": "Sponsorship", "partner": "Company" },
+  "kore-fulfilment": { "delivered": "Delivered To Date" }
+}

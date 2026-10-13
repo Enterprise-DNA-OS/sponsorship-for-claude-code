@@ -1,6 +1,6 @@
 # Why there is no front end
 
-KORE Software is a database with a subscription. The tables underneath it are ordinary: a few entities, a few relationships, a handful of workflows you repeat every week. What you pay for is the layer on top that lets people who do not write SQL get at those tables. Screens, filters, dashboards, forms.
+KORE Software is a set of modules on top of your CRM's database. The records underneath are ordinary: partners, assets, agreements, what was delivered and when. What you pay for is the layer on top that lets people who do not write SQL get at those tables. Screens, filters, dashboards, forms.
 
 That layer used to be the whole product, because talking to a database was hard. It is not hard any more. Open this folder in Claude Code, describe what you want, and it writes the query, runs it, and explains the answer. Ask a question the dashboard never had a chart for and you still get an answer.
 
@@ -14,7 +14,8 @@ That layer used to be the whole product, because talking to a database was hard.
 ## What you give up
 
 - **A visual board.** Stages are a table you ask about, not cards you drag.
-- **A phone app.** It runs where Claude Code runs.
+- **A phone app on match day.** It runs where Claude Code runs. The run sheet prints, and the deliveries are recorded after the event in one command.
+- **A partner portal.** Partners get a branded proof of performance report, not a login.
 - **A vendor help desk.** This is open source. Enterprise DNA supports the installed version for businesses that want someone to call.
 
 ## Who this fits
