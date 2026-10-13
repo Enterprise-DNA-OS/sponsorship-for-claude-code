@@ -115,7 +115,7 @@ Copy `.env.example` to `.env`, set `DATABASE_URL`, then `npm run migrate`. Same 
 
 ## Instead of KORE Software
 
-KORE runs inside your Salesforce or Dynamics, so your records come out as CRM report exports. Three one-command imports, in order: `npm run sponsorship -- import kore-assets --file=assets.csv --actor=You --dry-run`, then again without `--dry-run`; then `import kore-deals --file=agreements.csv` (partners are created from the account name); then `import kore-fulfilment --file=fulfilment.csv` (contracted and fulfilled quantities). Rehearse first, compare counts, then load. Renamed headings go through `examples/mapping.json`. [Switching guide](docs/replace-kore.md).
+KORE runs inside your CRM, so your records come out as CRM report exports. Three one-command imports, in order: `npm run sponsorship -- import kore-assets --file=assets.csv --actor=You --dry-run`, then again without `--dry-run`; then `import kore-deals --file=agreements.csv` (partners are created from the account name); then `import kore-fulfilment --file=fulfilment.csv` (contracted and fulfilled quantities). Rehearse first, compare counts, then load. Renamed headings go through `examples/mapping.json`. [Switching guide](docs/replace-kore.md).
 
 ## Architecture
 

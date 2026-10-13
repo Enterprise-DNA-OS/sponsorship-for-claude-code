@@ -210,7 +210,7 @@ function count(v,name,dflt=null){v=String(v||'').replace(/,/g,'').trim();if(!v)r
 const money=(v,name)=>{v=String(v||'').trim();return v?amount(v,name):null;};
 
 // Header names follow KORE's own field names where its product pages use them (assets, agreements, fulfilment);
-// KORE runs inside your Salesforce or Dynamics, so your report headings may differ. Copy examples/mapping.json and pass --mapping.
+// KORE runs inside your CRM, so your report headings may differ. Copy examples/mapping.json and pass --mapping.
 const IMPORTS={
  'kore-assets':{aliases:{name:['Asset Name','Asset','Inventory Item','Name'],kind:['Asset Type','Asset Category','Type','Category'],location:['Location','Venue','Facility'],unit:['Unit','Unit of Measure','Frequency','Rate Basis'],
   quantity_available:['Quantity Available','Inventory Quantity','Available','Quantity'],rate:['Rate Card','Rate Card Value','Rate','Unit Price','Price'],audience:['Audience']},key:'name'},

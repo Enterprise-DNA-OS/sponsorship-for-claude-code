@@ -1,6 +1,6 @@
 # Moving off KORE Software
 
-KORE sells Sponsorship, Activate and Evaluate as modules installed inside the CRM you already run, usually Salesforce or Microsoft Dynamics. That means your sponsorship records come out the way any CRM records do: as report exports to CSV. Three exports cover the move.
+KORE sells Sponsorship, Activate and Evaluate as modules installed inside the CRM you already run. That means your sponsorship records come out the way any CRM records do: as report exports to CSV. Three exports cover the move.
 
 ## 1. Export from your CRM
 
@@ -46,7 +46,7 @@ npm run sponsorship -- import kore-fulfilment --file=fulfilment.csv --delivered-
 - **Fulfilment history line by line.** The export gives a fulfilled count, so the history before the move is one line per entitlement. Every delivery after the move is its own dated line with its evidence.
 - **Proof of performance photos and files.** They stay where they are (your drive, your CRM files). Record where each one lives in the `evidence` field when you need it on a report.
 - **Partner portals and Tableau connections.** KORE can give partners their own view. Here the proof of performance report is a branded document you send (`npm run docs`). A partner portal is a customisation Enterprise DNA builds.
-- **Ticketing and hospitality sales.** KORE sells ticketing separately. This system records tickets and boxes that belong to a sponsorship, not ticket sales to the public.
+- **Ticketing and hospitality sales.** This system records tickets and boxes that belong to a sponsorship, not ticket sales to the public.
 
 ## After the move
 
